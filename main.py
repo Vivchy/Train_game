@@ -1,4 +1,5 @@
 import pygame 
+import area
 
 pygame.init()
 display_width = 600
@@ -11,6 +12,12 @@ def run_game():
 	pos_y = 250
 	speed = 10
 	motion = 'STOP'
+	train = area.Train(display, 50, 150, 10, 20, 100)
+	train2 = area.Train(display, 50, 150, 10, 20, 100)
+	train3 = area.Train(display, 50, 150, 10, 20, 100)
+	train4 = area.Train(display, 50, 150, 10, 20, 100)
+	
+
 	while True:
 		events = pygame.event.get()
 		for event in events:
@@ -27,7 +34,7 @@ def run_game():
 			pos_x -= speed
 		if keys[pygame.K_d]:
 			pos_x += speed	
-		#аналог по остальным сторнам		
+			
 		if pos_x > display_width-30:
 			pos_x = display_width-30
 		if pos_x < 0:
@@ -36,9 +43,14 @@ def run_game():
 			pos_y = display_height - 30
 		if pos_y < 0:
 			pos_y = 0
+		
 		display.fill((222, 222, 222))
 		pygame.draw.rect(display, (0, 0, 0), (pos_x, pos_y, 30, 30))
-
+		
+		train.move(display_width)
+		train2.move(display_width)
+		train3.move(display_width)
+		train4.move(display_width)
 		pygame.display.update()
 		clock.tick(60)
 run_game()
