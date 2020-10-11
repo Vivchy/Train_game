@@ -14,7 +14,7 @@ class Train():
 		self.side_move_to = 99
 
 	def move(self, d_width, d_height):
-		
+		""" движение состава по экрану """
 		if self.new_line:
 			self.begin_train(d_width, d_height)
 			self.new_line = False
@@ -25,7 +25,7 @@ class Train():
 					self.new_line = True
 			elif self.side_move_to == 1:
 				self.pos_y -= self.speed
-				if self.pos_y < 0:
+				if self.pos_y < 0 - self.height:
 					self.new_line = True
 			elif self.side_move_to == 2:
 				self.pos_x += self.speed
@@ -33,12 +33,11 @@ class Train():
 					self.new_line = True
 			elif self.side_move_to == 3:
 				self.pos_x -= self.speed
-				if self.pos_x < 0:
+				if self.pos_x < 0 - self.width:
 					self.new_line = True
-			print(self.side_move_to)
-			print(self.pos_x)
 		pygame.draw.rect(self.display, self.color, (self.pos_x, self.pos_y, self.width, self.height))
 	def begin_train(self, d_width, d_height):
+		""" выбор позиции для старта состава за экраном """
 		start_side = random.randrange(0, 4)
 		
 		if start_side == 0:
@@ -55,15 +54,22 @@ class Train():
 			self.side_move_to = 2
 		elif start_side == 3:
 			self.pos_y = random.randrange(0, d_height - self.height)
-			self.pos_x = 0 - self.width - 100
+			self.pos_x = d_width + self.width + 100
 			self.side_move_to = 3
-		self.height = random.randrange(50, 500, 20)
+		if start_side == 0 or start_side == 1:
+			self.height = random.randrange(70, 300, 20)
+			self.width = 30
+		else:
+			self.width = random.randrange(70, 300, 20)
+			self.height = 30
+		
 		self.color = (random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255))
 		self.speed = random.randrange(2, 10)
-		print('lol')
+		
 		
 		
 def user_events(pos_x, pos_y, speed, display_width, display_height):
+	""" движение игрока """
 	events = pygame.event.get()
 	for event in events:
 		if event.type == pygame.QUIT:
