@@ -1,6 +1,7 @@
 import pygame
 import random
 class Train():
+	# just comment
 	def __init__(self, display, width, height, speed, pos_x, pos_y):
 		self.width = width
 		self.height = height
